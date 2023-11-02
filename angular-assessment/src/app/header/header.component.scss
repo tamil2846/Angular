@@ -1,0 +1,33 @@
+@import "src/app/shared/variables";
+
+.headerContainer{
+  height: 65px;
+  background-color: $primary-color;
+  padding: 0 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  & > .headerimage{
+    width: 30px;
+    height: 30px;
+  }
+  & > .headerNavLink{
+    height: 65px;
+    display: flex;
+    & > a {
+      padding: 20px 25px;
+      color: white;
+      &.active{
+        border-bottom:2px solid white;
+      }
+    }
+  }
+  & > .userProfile{
+    display: flex;
+    &>div{
+      color: white;
+      margin-right: 10px;
+      margin-top: 5px;
+    }
+  }
+}

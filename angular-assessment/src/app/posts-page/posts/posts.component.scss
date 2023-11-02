@@ -1,0 +1,17 @@
+.postsContainer{
+  padding: 80px 150px;
+  .postsHeader{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 40px;
+    &>h2{
+      font-weight: 300;
+    }
+    &>div{
+      display: flex;
+      &>button{
+        border-radius: 5px;
+      }
+    }
+  }
+}

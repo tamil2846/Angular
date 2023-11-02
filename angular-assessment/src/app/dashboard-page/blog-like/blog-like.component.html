@@ -1,0 +1,13 @@
+<nz-divider></nz-divider>
+<div class="likeContainer" *ngIf="userDetails.body.email !== blogDetails.user.email">
+  <div (click)="handleLike()"  *ngIf="liked; else elseBlock">
+    <span nz-icon nzType="like" nzTheme="twotone" style="font-size: 20px;"></span>
+    <span>Like</span>
+  </div>
+  <ng-template #elseBlock>
+  <div (click)="handleLike()">
+    <span nz-icon nzType="like" nzTheme="outline" style="font-size: 20px;"></span>
+    <span>Like</span>
+  </div>
+  </ng-template>
+</div>

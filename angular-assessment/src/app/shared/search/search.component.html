@@ -1,0 +1,10 @@
+<div class="searchConatiner">
+  <form [formGroup]="searchForm">
+    <nz-input-group [nzSuffix]="suffixIconSearch">
+      <input type="text" nz-input formControlName="search" placeholder="Search"/>
+    </nz-input-group>
+  </form>
+  <ng-template #suffixIconSearch>
+    <span nz-icon nzType="search"></span>
+  </ng-template>
+</div>

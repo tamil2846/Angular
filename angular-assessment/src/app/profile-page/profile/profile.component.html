@@ -1,0 +1,23 @@
+<div class="profileCard">
+  <nz-card style="width:300px;" [nzActions]="[actionSetting, actionEdit, actionLogout]">
+    <nz-card-meta
+      [nzTitle]=userDetails?.body?.first_name
+      [nzDescription]=userDetails?.body?.email
+      [nzAvatar]="avatarTemplate"
+    ></nz-card-meta>
+  </nz-card>
+  <ng-template #avatarTemplate>
+    <nz-avatar [nzSrc]="userDetails?.body?.profile_url ? userDetails?.body?.profile_url :
+                  'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'"></nz-avatar>
+  </ng-template>
+  <ng-template #actionSetting>
+    <span nz-icon nzType="setting"  nz-tooltip nzTooltipTitle="Setting"></span>
+  </ng-template>
+  <ng-template #actionEdit>
+    <span nz-icon nzType="edit" nz-tooltip nzTooltipTitle="Profile Update" (click)="handleEdit()"></span>
+  </ng-template>
+  <ng-template #actionLogout>
+    <span nz-icon nzType="logout" nz-tooltip nzTooltipTitle="Logout" (click)="handleLogout()"></span>
+  </ng-template>
+  <app-model></app-model>
+</div>

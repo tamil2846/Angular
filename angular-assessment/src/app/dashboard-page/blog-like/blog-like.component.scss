@@ -1,0 +1,12 @@
+.likeContainer{
+  margin-top: 50px;
+  &>div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    cursor: pointer;
+    & > span:first-child {
+      margin-left: 5px;
+    }
+  }
+}

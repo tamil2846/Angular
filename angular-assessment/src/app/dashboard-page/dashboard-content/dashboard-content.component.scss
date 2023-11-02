@@ -1,0 +1,18 @@
+.dashboardContentContainer{
+  padding: 50px 80px;
+  .dashboardContentSpin{
+    display:flex;
+    justify-content: center;
+  }
+  &>h3{
+    margin-top: 50px;
+  }
+  &>p{
+    line-height: 2;
+    text-indent: 10%;
+    text-align: justify;
+  }
+  &>.blogImage{
+    height: 250px;
+  }
+}

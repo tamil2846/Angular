@@ -1,0 +1,40 @@
+<div class="dashboardContentContainer">
+    <div *ngIf="publishBlogLoader | async ; else elseSpin" class="dashboardContentSpin">
+      <nz-spin nzTip="Loading..." nzSimple [nzSize]="'large'"></nz-spin>
+    </div>
+    <ng-template #elseSpin>
+      <div *ngIf="!(publishBlog| async); else elseBlock">
+        No Blog Selected
+      </div>
+      <ng-template #elseBlock>
+      <h1>{{(publishBlog |async).name}}</h1>
+      <div *ngFor="let blog of publishPosts | async">
+        <nz-card-meta
+          *ngIf="blog.id === (publishBlog | async).id"
+          nzTitle="-- {{blog?.user?.first_name}}"
+          nzDescription="{{blog.user.updated_at | date:'dd-MMM-YYYY'}}"
+          [nzAvatar]="avatarTemplate"
+        ></nz-card-meta>
+        <ng-template #avatarTemplate>
+          <nz-avatar [nzSrc]="blog?.user?.profile_url ?
+                      blog?.user?.profile_url :
+                      'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'">
+          </nz-avatar>
+        </ng-template>
+      </div>
+      <h3>Description:</h3>
+      <p>{{(publishBlog | async).content}}</p>
+      <div class="blogImage">
+        <img
+          nz-image
+          width="100%"
+          height="100%"
+          nzSrc="{{(publishBlog | async).image_url}}"
+          alt=""
+        />
+      </div>
+      <app-blog-like Id="{{(publishBlog | async).id}}"></app-blog-like>
+      <app-blog-comments id="{{(publishBlog | async).id}}"></app-blog-comments>
+      </ng-template>
+    </ng-template>
+</div>

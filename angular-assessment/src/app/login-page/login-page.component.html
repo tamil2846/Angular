@@ -1,0 +1,58 @@
+ <div class="loginContent">
+
+<!--    blog Image-->
+    <div class="blogImage">
+      <img
+        nz-image
+        width="100%"
+        height="100%"
+        nzSrc="assets/images/blog.png"
+        alt="Screen"
+       />
+    </div>
+
+<!--    Login Form-->
+    <form
+      class="loginForm"
+      nz-form
+      [nzLayout]="'vertical'"
+      [formGroup]="validateForm"
+      (ngSubmit)="submitForm()"
+      [nzAutoTips]="autoTips"
+    >
+      <nz-form-item>
+        <nz-form-label nzFor="email">Email</nz-form-label>
+        <nz-form-control nzErrorTip="Enter your email!">
+          <input
+            nz-input
+            type="email"
+            formControlName="email"
+            placeholder="Email"
+            id="email"
+          />
+        </nz-form-control>
+        </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label nzFor="password">Password</nz-form-label>
+        <nz-form-control  nzErrorTip="Enter your Password!">
+          <input nz-input formControlName="password" placeholder="Password" id="password"/>
+        </nz-form-control>
+        </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-control [nzOffset]="8" *ngIf="buttonLoader|async; else elseBlock">
+          <button nz-button nzType="primary" class="submitButton" nzLoading>Submit</button>
+        </nz-form-control>
+        <ng-template #elseBlock>
+          <nz-form-control [nzOffset]="8">
+            <button nz-button nzType="primary" class="submitButton">Submit</button>
+          </nz-form-control>
+        </ng-template>
+      </nz-form-item>
+    </form>
+
+
+<!--    navigate to registerPage-->
+    <p>Don’t have an account? <a href="register">Signup</a></p>
+  </div>

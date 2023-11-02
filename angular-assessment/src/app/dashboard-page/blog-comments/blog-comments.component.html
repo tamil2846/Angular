@@ -1,0 +1,73 @@
+<div class="blogCommentsContainer">
+  <form
+    nz-form
+    [nzLayout]="'vertical'"
+    [formGroup]="validateCommentForm"
+    (ngSubmit)="submitForm()"
+  >
+    <nz-form-item>
+      <nz-form-label nzFor="comments">Comments</nz-form-label>
+      <textarea
+        rows="4"
+        nz-input
+        formControlName="comment"
+        placeholder="Add Comments..."
+        id="comments"></textarea>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-control>
+        <button nz-button class="submitButton" (click)="handleCancel()" style="margin-right: 20px">Cancel</button>
+        <button nz-button nzType="primary" class="submitButton">
+         <span *ngIf="hasEdit; else elseButton">Update</span>
+         <ng-template #elseButton>Submit</ng-template>
+        </button>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+
+
+  <div class="commentsDisplay">
+    <nz-card nzTitle="Blog Comments">
+      <div nz-card-grid [ngStyle]="gridStyle" *ngIf="(blog|async).comments.length === 0;else displayComments">
+        No Comments for this blog
+      </div>
+      <ng-template #displayComments>
+        <div *ngIf="commentsLoader | async; else elseSpin" class="displayCenter">
+          <nz-spin nzTip="Loading..." nzSimple [nzSize]="'large'"></nz-spin>
+        </div>
+        <ng-template #elseSpin>
+          <div nz-card-grid
+               [ngStyle]="gridStyle"
+               *ngFor="let comment of (blog|async).comments"
+               class="commentsContent"
+               (mouseenter)="handleIcon(comment.id)"
+               (mouseleave)="handleIcon(0)">
+            <div>
+              <nz-card-meta
+                nzTitle="{{comment?.user?.first_name}}"
+                nzDescription="{{comment.comment}}"
+                [nzAvatar]="avatarTemplate"
+              ></nz-card-meta>
+              <ng-template #avatarTemplate>
+                <nz-avatar nzSrc="{{ comment?.user?.profile_url ? comment?.user?.profile_url :
+                  'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png' }}"></nz-avatar>
+              </ng-template>
+              </div>
+              <div *ngIf="userDetails?.body?.email === comment?.user?.email">
+                <div *ngIf="iconVisibleId === comment.id">
+                  <span nz-icon nzType="edit" nzTheme="outline"
+                    style="color: #007bec;margin-right: 5px"
+                      (click)="handleEdit(comment)"
+                  ></span> {{"|"}}
+                  <span nz-icon nzType="delete" nzTheme="outline"
+                    style="color: red;margin-left: 5px"
+                    (click)="handleDelete(comment.id)"
+                  ></span>
+                </div>
+              </div>
+          </div>
+        </ng-template>
+      </ng-template>
+    </nz-card>
+  </div>
+</div>

@@ -1,0 +1,63 @@
+<nz-table #Table
+          nzSize="middle"
+          [nzData]="(posts | async)"
+          [nzShowPagination]="false"
+          [nzLoading]="loading | async"
+>
+  <thead>
+  <tr>
+    <th *ngFor="let column of listOfColumns"
+        [nzWidth]="column?.width"
+        [nzSortOrder]="column?.sortOrder"
+        (click)="column?.click && handleSort()"
+        [nzSortDirections]="column?.sortDirections"
+     >{{column.name}}</th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody class="tableBody">
+    <tr *ngFor="let data of Table.data" class="tableBodyRow"
+        (mouseenter)="actionVisible(data.id)" (mouseleave)=" !popUp && actionHidden()"
+    >
+      <td><a [routerLink]="'/post/' + [data.id]">{{ data.name }}</a></td>
+      <td>
+        <nz-badge [nzColor]="data.is_published ? 'green' : 'red' "></nz-badge>
+        {{ data.created_at | date:'YYYY-MM-dd hh:mm:ss'}}
+      </td>
+      <td>{{ data.updated_at | date:'YYYY-MM-dd hh:mm:ss'}}</td>
+      <td>
+        <div *ngIf="id===data.id; else elseBlock">
+          <span nz-icon nzType="delete"
+              style="margin-right: 10px; color: red; cursor: pointer"
+                nz-popconfirm
+                nzPopconfirmTitle="Are you sure delete this blog?"
+                (nzOnConfirm)="handleDelete(data.id)"
+                (nzOnCancel)="handleCancel()"
+              (click)="handlePopUp()"></span>
+          <button nz-button nzType="primary"
+                  *ngIf="publishButtonLoader | async; else elseLoading"
+                  (click)="handlePublish(data)"
+                  nzLoading
+          >
+            <span *ngIf="!data.is_published; else elseUnPublish">Publish</span>
+            <ng-template #elseUnPublish>UnPublish</ng-template>
+          </button>
+          <ng-template #elseLoading>
+            <button nz-button nzType="primary"
+                    (click)="handlePublish(data)"
+            >
+              <span *ngIf="!data.is_published; else elseUnPublish">Publish</span>
+              <ng-template #elseUnPublish>UnPublish</ng-template>
+            </button>
+          </ng-template>
+        </div>
+        <ng-template #elseBlock></ng-template>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>
+<nz-pagination  class="tablePagination"
+                  [nzTotal]="(tablePaginationData | async).total"
+                  (nzPageIndexChange)="handleChange($event)"
+                  [nzPageIndex]="pageNo"
+></nz-pagination>

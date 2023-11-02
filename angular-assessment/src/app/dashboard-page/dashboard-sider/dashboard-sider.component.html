@@ -1,0 +1,36 @@
+<div class="dashboardSiderContainer">
+  <div class="infiniteScrollHeading">
+    <h2>Published Blogs</h2>
+    <app-search (dataFromChild)="setData($event)"></app-search>
+  </div>
+  <cdk-virtual-scroll-viewport itemSize="250" class="demo-infinite-container"
+                               (scrolledIndexChange)="handler($event, hasMoreData)">
+    <nz-list>
+      <nz-divider *ngIf="(publicPosts|async).length === 0 && !(sideLoader | async); else elseBlock"
+                    nzText="No Data">
+      </nz-divider>
+      <ng-template #elseBlock>
+        <nz-list-item *ngFor="let item of publicPosts | async">
+          <div nz-card-grid [ngStyle]="gridStyle">
+          <nz-list-item-meta
+            [nzAvatar]="avatarTemplate"
+            [nzTitle]="item.name"
+            nzDescription="-- {{item?.user?.first_name}}, {{item.user.updated_at | date:'dd-MMM-YYYY'}}"
+            style="cursor: pointer"
+            (click)="handleBlog(item.id)"
+          >
+            <ng-template #avatarTemplate>
+              <nz-avatar [nzShape]="'square'" nzSrc="{{ item?.user?.profile_url ?
+                item?.user?.profile_url :
+                'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png' }}">
+              </nz-avatar>
+            </ng-template>
+          </nz-list-item-meta>
+          </div>
+        </nz-list-item>
+      </ng-template>
+    </nz-list>
+    <nz-skeleton [nzAvatar]="true" [nzParagraph]="{ rows: 1 }" *ngIf="sideLoader | async"></nz-skeleton>
+    <nz-divider *ngIf="!hasMoreData" nzText="No More Data"></nz-divider>
+  </cdk-virtual-scroll-viewport>
+</div>

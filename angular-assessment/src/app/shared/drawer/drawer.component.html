@@ -1,0 +1,82 @@
+<nz-drawer
+  [nzBodyStyle]="{ overflow: 'auto' }"
+  [nzMaskClosable]="false"
+  [nzWidth]="400"
+  [nzVisible]="drawerVisible | async"
+  [nzTitle]="hasEdit == 'true' ? 'Edit' : 'Create'"
+  [nzFooter]="footerTpl"
+  (nzOnClose)="handleClose()"
+>
+  <form nz-form *nzDrawerContent  [formGroup]="blogDetails" nz-row>
+        <nz-form-item nz-col [nzSpan]="24">
+          <nz-form-label nzFor="blogTitle" nzRequired>Blog title</nz-form-label>
+          <nz-form-control nzErrorTip="Please Enter Blog Title">
+            <input
+              id="blogTitle"
+              nz-input
+              placeholder="Title"
+              formControlName="name"
+            />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item nz-col [nzSpan]="24">
+          <nz-form-label nzFor="coverImage" nzRequired >Cover Image</nz-form-label>
+          <nz-form-control nzErrorTip="Please Upload Image">
+            <nz-upload
+              id="coverImage"
+              nzType="drag"
+              nzAction="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+              (nzChange)="handleChange($event)"
+              formControlName="image"
+              nzListType="picture"
+              ngDefaultControl
+              [nzFileList]="fileList"
+              [nzBeforeUpload]="beforeUpload"
+            >
+              <p class="ant-upload-drag-icon">
+                <span nz-icon nzType="inbox"></span>
+              </p>
+              <p class="ant-upload-text">Cover Image</p>
+              <p class="ant-upload-hint">
+                image format .jpg .png
+              </p>
+            </nz-upload>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item nz-col [nzSpan]="24">
+          <nz-form-label nzFor="content" nzRequired>Content</nz-form-label>
+          <nz-form-control nzErrorTip="Please Enter Blog description">
+                <textarea
+                  nz-input
+                  id="content"
+                  placeholder="Blog content"
+                  formControlName="content"
+                  [nzAutosize]="{ minRows: 4, maxRows: 4 }"></textarea>
+          </nz-form-control>
+        </nz-form-item>
+  </form>
+  <ng-template #footerTpl>
+    <div style="float: right">
+      <button nz-button style="margin-right: 8px;" (click)="handleClose()">Cancel</button>
+      <span *ngIf="buttonLoader|async;else elseBlock">
+        <button nz-button nzType="primary"
+                (click)="submitForm()"
+                *ngIf="hasEdit; else hasEditFalse"
+                nzLoading
+        >Update</button>
+        <ng-template #hasEditFalse>
+          <button nz-button nzType="primary" nzLoading (click)="submitForm()">Submit</button>
+        </ng-template>
+      </span>
+      <ng-template #elseBlock>
+        <button nz-button nzType="primary"
+              (click)="submitForm()"
+              *ngIf="hasEdit == 'true' ; else hasEditFalse"
+        >Update</button>
+        <ng-template #hasEditFalse>
+          <button nz-button nzType="primary" (click)="submitForm()">Submit</button>
+        </ng-template>
+      </ng-template>
+    </div>
+  </ng-template>
+</nz-drawer>

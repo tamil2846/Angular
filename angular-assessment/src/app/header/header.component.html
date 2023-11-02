@@ -1,0 +1,26 @@
+<div class="headerContainer">
+  <div class="headerimage">
+    <img
+      nz-image
+      nzDisablePreview
+      width="100%"
+      height="100%"
+      nzSrc="../../assets/images/userBlog.png"
+      alt="Screen"
+    />
+  </div>
+  <div class="headerNavLink">
+    <a [routerLink]="['profile']" routerLinkActive="active">Profile</a>
+    <a [routerLink]="['dashboard']" routerLinkActive="active">Dashboard</a>
+    <a [routerLink]="['posts']" routerLinkActive="active">Posts</a>
+  </div>
+  <div class="userProfile">
+    <div>{{loginDetails?.body?.first_name}}</div>
+    <nz-avatar nzTooltipTitle="Log Out" nzTooltipPlacement="top" nz-tooltip
+               nzIcon="user"
+               style="background-color:#a6dbff;cursor: pointer"
+               [nzSrc]="this.loginDetails.body.profile_url"
+               (click)="handleLogout()"
+    ></nz-avatar>
+  </div>
+</div>

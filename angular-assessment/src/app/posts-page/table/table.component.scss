@@ -1,0 +1,14 @@
+.tableBody {
+  width: 100%;
+  &>.tableBodyRow {
+    height: 60px;
+  }
+}
+.tableSpin{
+  display: flex;
+  justify-content: center;
+}
+.tablePagination{
+  margin-top: 20px;
+  text-align: end;
+}

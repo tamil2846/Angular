@@ -1,0 +1,11 @@
+<div class="postsContainer">
+  <div class="postsHeader">
+    <h2 nz-typography>Posts</h2>
+    <div>
+      <app-search (dataFromChild)="setData($event)"></app-search>
+      <button nz-button nzType="primary" (click)="drawerOpen()">Create</button>
+    </div>
+  </div>
+  <app-table searchValue="{{searchValue}}"></app-table>
+  <app-drawer hasEdit="{{hasEdit | async}}"></app-drawer>
+</div>

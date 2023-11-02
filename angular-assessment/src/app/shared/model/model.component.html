@@ -1,0 +1,54 @@
+<div>
+  <nz-modal
+    [nzVisible]="modelVisible | async "
+    nzTitle="The first Modal"
+    (nzOnCancel)="handleCancel()"
+    >
+    <ng-container *nzModalContent>
+      <form
+        class="loginForm"
+        nz-form
+        [nzLayout]="'vertical'"
+        [formGroup]="validateForm"
+      >
+        <nz-form-item>
+          <nz-form-label nzFor="fName" nzRequired>First Name</nz-form-label>
+          <nz-form-control  nzErrorTip="Enter your First Name!">
+            <input nz-input formControlName="first_name" placeholder="Name" id="fName"/>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label nzFor="lName" nzRequired>Last Name</nz-form-label>
+          <nz-form-control  nzErrorTip="Enter your Last Name!">
+            <input nz-input formControlName="last_name" placeholder="Name" id="lName"/>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item nz-col [nzSpan]="24">
+          <nz-form-label nzFor="image" nzRequired >Profile Image</nz-form-label>
+          <nz-form-control nzErrorTip="Please Upload Image">
+            <nz-upload
+              id="image"
+              nzAction="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+              (nzChange)="handleChange($event)"
+              formControlName="profile_url"
+              nzListType="picture"
+              ngDefaultControl
+            >
+              <button nz-button>
+                <span nz-icon nzType="upload"></span>
+                Upload
+              </button>
+            </nz-upload>
+          </nz-form-control>
+        </nz-form-item>
+
+      </form>
+    </ng-container>
+    <div *nzModalFooter>
+      <button nz-button nzType="default" (click)="handleCancel()">Cancel</button>
+      <button nz-button nzType="primary" (click)="handleOk()" >Update</button>
+    </div>
+  </nz-modal>
+</div>

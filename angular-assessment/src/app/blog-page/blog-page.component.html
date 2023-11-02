@@ -1,0 +1,61 @@
+<div class="blogContainer">
+  <div class="blogHeader">
+    <button nz-button (click)="handleBack()">Back</button>
+    <div>
+      <span nz-icon nzType="delete"
+            style="color: red;cursor: pointer"
+            nzTheme="outline"
+            nz-popconfirm
+            nzPopconfirmTitle="Are you sure delete this blog?"
+            (nzOnConfirm)="handleDelete()"
+            nzOnCancel
+      ></span>
+      <button nz-button nzType="primary" (click)="handleEdit()">Edit</button>
+      <span *ngIf="publishButtonLoader | async; else elseLoading">
+        <button nz-button nzType="primary"
+              *ngIf="!(blog | async).is_published; else elseUnPublish"
+               nzLoading>
+        Publish</button>
+        <ng-template #elseUnPublish>
+          <button nz-button nzType="primary" nzLoading>Unpublish</button>
+        </ng-template>
+        </span>
+        <ng-template #elseLoading>
+          <button nz-button nzType="primary"
+                  (click)="hanblePublish(true)"
+                  *ngIf="!(blog | async).is_published; else elseUnPublish"
+          >
+            Publish</button>
+          <ng-template #elseUnPublish>
+            <button nz-button nzType="primary"
+                    (click)="hanblePublish(false)" >Unpublish
+            </button>
+          </ng-template>
+        </ng-template>
+    </div>
+  </div>
+  <div *ngIf="loading | async; else elseBlock" class="blogContent">
+    <nz-skeleton-element
+      nzType="image"
+      [nzActive]=true
+      ></nz-skeleton-element>
+      <nz-skeleton></nz-skeleton>
+  </div>
+  <ng-template #elseBlock>
+  <div class="blogImage">
+    <img
+      nz-image
+      nzDisablePreview
+      width="100%"
+      height="100%"
+      nzSrc="{{(blog | async).image_url}}"
+      alt="{{(blog | async).name}}"
+    />
+  </div>
+  <div class="blogContent">
+    <h1>{{(blog | async).name}}</h1>
+    <p>{{(blog | async).content}}</p>
+  </div>
+  </ng-template>
+  <app-drawer hasEdit="{{hasEdit | async}}"></app-drawer>
+</div>

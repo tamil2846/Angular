@@ -1,0 +1,16 @@
+.registerContent{
+  padding: 50px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  .blogImage{
+    width: 110px;
+    height: 40px;
+    align-self: flex-start;
+  }
+  .registerForm{
+    width: 400px;
+  }
+}
